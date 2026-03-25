@@ -9,7 +9,6 @@
   "license": "MIT",
   "environment": "client",
   "entrypoints": {
-    "main": [ "com.izhan.texturecorrupter.TextureCorrupter" ]
   },
   "mixins": [ "texturecorrupter.mixins.json" ],
   "depends": {
