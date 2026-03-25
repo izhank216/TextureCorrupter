@@ -16,7 +16,7 @@ import java.util.Random;
 public abstract class TextureCorruptionMixin {
     @Shadow @Final @Mutable private int width;
     @Shadow @Final @Mutable private int height;
-    @Shadow @Final private NativeImage image;
+    @Shadow @Final @Mutable private NativeImage image;
 
     private final Random random = new Random();
 
@@ -34,8 +34,22 @@ public abstract class TextureCorruptionMixin {
         }
 
         if (random.nextFloat() < 0.05f) {
-            this.width = Math.max(1, this.width + (random.nextInt(11) - 5));
-            this.height = Math.max(1, this.height + (random.nextInt(11) - 5));
+            int newWidth = Math.max(1, this.width + (random.nextInt(11) - 5));
+            int newHeight = Math.max(1, this.height + (random.nextInt(11) - 5));
+
+            NativeImage newImage = new NativeImage(image.getFormat(), newWidth, newHeight, false);
+            
+
+            for (int y = 0; y < Math.min(this.height, newHeight); y++) {
+                for (int x = 0; x < Math.min(this.width, newWidth); x++) {
+                    newImage.setColorArgb(x, y, image.getColorArgb(x, y));
+                }
+            }
+
+
+            this.image = newImage;
+            this.width = newWidth;
+            this.height = newHeight;
         }
     }
 }
