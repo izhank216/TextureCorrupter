@@ -1,0 +1,11 @@
+{
+  "required": true,
+  "package": "com.izhan.texturecorrupter.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "TextureCorruptionMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
