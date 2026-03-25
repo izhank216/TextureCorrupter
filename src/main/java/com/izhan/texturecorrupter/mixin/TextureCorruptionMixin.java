@@ -25,7 +25,7 @@ public abstract class TextureCorruptionMixin {
         for (int y = 0; y < this.height; y++) {
             for (int x = 0; x < this.width; x++) {
                 if (random.nextFloat() < 0.15f) {
-                    int color = img.getPixelAbgr(x, y);
+                    int color = img.getColorArgb(x, y);
                     img.setColor(x, y, color ^ random.nextInt(0xFFFFFF));
                 }
             }
