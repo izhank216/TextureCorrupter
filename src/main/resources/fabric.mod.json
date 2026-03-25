@@ -1,0 +1,38 @@
+{
+	"schemaVersion": 1,
+	"id": "texturecorruptor",
+	"version": "1.0",
+	"name": "TextureCorruptor",
+	"description": "Corrupts Minecraft textures.",
+	"authors": [
+		"Izhan, kizzy-june"
+	],
+	"contact": {
+		"homepage": "https://github.com/izhank216/TextureCorrupter",
+		"sources": "https://github.com/izhank216/TextureCorrupter"
+	},
+	"license": "MIT License",
+	"icon": "assets/texturecorruptor/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"com.izhan.texturecorruptor.TextureCorruptor"
+		],
+		"client": [
+			"com.izhan.texturecorruptor.TextureCorruptorClient"
+		]
+	},
+	"mixins": [
+		"texturecorruptor.mixins.json",
+		{
+			"config": "texturecorruptor.client.mixins.json",
+			"environment": "client"
+		}
+	],
+	"depends": {
+		"fabricloader": ">=0.18.4",
+		"minecraft": "~1.21.11",
+		"java": ">=21",
+		"fabric-api": "*"
+	}
+}
