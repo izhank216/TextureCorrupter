@@ -13,4 +13,8 @@ public class MaterialDefinitonMixin {
     private static int modifyX(int x) {
         return x + 20;
     }
+    @ModifyVariable(method = "<init>", at = @At("HEAD"), ordinal = 1, argsOnly = true)
+    private static int modifyY(int y) {
+        return y - 20;
+    }
 }
