@@ -11,6 +11,6 @@ import org.spongepowered.asm.mixin.injection.ModifyVariable;
 public class MaterialDefinitonMixin {
     @ModifyVariable(method = "<init>", at = @At("HEAD"), ordinal = 0, argsOnly = true)
     private static int modifyX(int x) {
-        return x + 10;
+        return x + 20;
     }
 }
