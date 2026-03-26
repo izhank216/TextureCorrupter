@@ -8,6 +8,8 @@ Corrupts minecraft textures
 - The texture corruption changes depending on how the texture filtering, the anisotropic filtering level and mipmap level is set.
 - This mod is for fabric 1.21.11 and requires fabric API.
 - Icon art by 0NULLVOID0
+- Programming and managment by kizzy-june
+- Mod idea by Izhan, inital code by him as well that I just deleted since it didn't work lmao - kizzy-june
 
 ## Gallery
 - Gallery 1
