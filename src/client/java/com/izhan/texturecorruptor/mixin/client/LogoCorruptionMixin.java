@@ -2,7 +2,7 @@ package com.izhan.texturecorruptor.mixin.client;
 
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.LogoRenderer;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -30,14 +30,14 @@ public class LogoCorruptionMixin {
 
         int color = ((int) (l * 255.0F) << 24) | 0xFFFFFF;
 
-        this.drawCorruptedTexture(guiGraphics, k, j, 0, 0, 256, 44, 256, 64, ResourceLocation.withDefaultNamespace("textures/gui/title/minecraft.png"), color);
-        this.drawCorruptedTexture(guiGraphics, k + 64, j + 44, 0, 0, 128, 14, 128, 16, ResourceLocation.withDefaultNamespace("textures/gui/title/edition.png"), color);
+        this.drawCorruptedTexture(guiGraphics, k, j, 0, 0, 256, 44, 256, 64, Identifier.ofVanilla("textures/gui/title/minecraft.png"), color);
+        this.drawCorruptedTexture(guiGraphics, k + 64, j + 44, 0, 0, 128, 14, 128, 16, Identifier.ofVanilla("textures/gui/title/edition.png"), color);
         
         this.renderStaticNoise(guiGraphics, k, j, 256, 60, l);
     }
 
     @Unique
-    private void drawCorruptedTexture(GuiGraphics guiGraphics, int x, int y, int u, int v, int width, int height, int texWidth, int texHeight, ResourceLocation texture, int color) {
+    private void drawCorruptedTexture(GuiGraphics guiGraphics, int x, int y, int u, int v, int width, int height, int texWidth, int texHeight, Identifier texture, int color) {
         int rows = 16;
         int rowHeight = Math.max(1, height / rows);
 
