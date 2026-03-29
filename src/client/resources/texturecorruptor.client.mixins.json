@@ -5,7 +5,8 @@
 	"client": [
 		"BiomeColorMixin",
 		"TextureAtlasSpriteMixin",
-		"MaterialDefinitonMixin"
+		"MaterialDefinitonMixin",
+		"LogoCorruptionMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1
