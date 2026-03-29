@@ -2,7 +2,7 @@ package com.izhan.texturecorruptor.mixin.client;
 
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.LogoRenderer;
-import net.minecraft.util.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -16,61 +16,52 @@ public class LogoCorruptionMixin {
 
     @Unique
     private final Random random = new Random();
+    @Unique
+    private static final ResourceLocation MINECRAFT_LOGO = ResourceLocation.withDefaultNamespace("textures/gui/title/minecraft.png");
+    @Unique
+    private static final ResourceLocation EDITION_LOGO = ResourceLocation.withDefaultNamespace("textures/gui/title/edition.png");
 
     @Inject(method = "render", at = @At("HEAD"), cancellable = true)
     public void render(GuiGraphics guiGraphics, int i, float f, int j, CallbackInfo ci) {
         ci.cancel();
 
-        int k = i / 2 - 128;
-        float l = f;
+        int centerX = i / 2;
+        float alpha = f;
 
-        if (random.nextFloat() < 0.1f) {
-            l *= (0.7f + random.nextFloat() * 0.5f);
+        if (random.nextFloat() < 0.05f) {
+            alpha *= (0.5f + random.nextFloat() * 0.5f);
         }
 
-        int color = ((int) (l * 255.0F) << 24) | 0xFFFFFF;
+        int color = ((int) (alpha * 255.0F) << 24) | 0xFFFFFF;
 
-        this.drawCorruptedTexture(guiGraphics, k, j, 0, 0, 256, 44, 256, 64, Identifier.of("minecraft", "textures/gui/title/minecraft.png"), color);
-        this.drawCorruptedTexture(guiGraphics, k + 64, j + 44, 0, 0, 128, 14, 128, 16, Identifier.of("minecraft", "textures/gui/title/edition.png"), color);
-        
-        this.renderStaticNoise(guiGraphics, k, j, 256, 60, l);
+        this.drawCorrupted(guiGraphics, MINECRAFT_LOGO, centerX - 128, j, 256, 44, 256, 64, color);
+        this.drawCorrupted(guiGraphics, EDITION_LOGO, centerX - 64, j + 44, 128, 14, 128, 16, color);
     }
 
     @Unique
-    private void drawCorruptedTexture(GuiGraphics guiGraphics, int x, int y, int u, int v, int width, int height, int texWidth, int texHeight, Identifier texture, int color) {
-        int rows = 16;
-        int rowHeight = Math.max(1, height / rows);
+    private void drawCorrupted(GuiGraphics guiGraphics, ResourceLocation texture, int x, int y, int width, int height, int texWidth, int texHeight, int color) {
+        int slices = 10 + random.nextInt(10);
+        int sliceHeight = Math.max(1, height / slices);
 
-        for (int i = 0; i < rows; i++) {
-            int xOffset = 0;
-            float rand = random.nextFloat();
+        for (int i = 0; i < slices; i++) {
+            int currY = y + (i * sliceHeight);
             
-            if (rand < 0.12f) {
+            int wOffset = 0;
+            int xOffset = 0;
+            
+            if (random.nextFloat() < 0.2f) {
+                wOffset = random.nextInt(40) - 20;
                 xOffset = random.nextInt(10) - 5;
-            } else if (rand < 0.015f) {
-                xOffset = random.nextInt(60) - 30;
             }
 
-            int vOffset = i * rowHeight;
-            if (vOffset < height) {
-                int currentHeight = Math.min(rowHeight, height - vOffset);
-                guiGraphics.drawTexture(texture, x + xOffset, y + vOffset, (float) u, (float) (v + vOffset), width, currentHeight, texWidth, texHeight, color);
+            if (random.nextFloat() < 0.02f) {
+                wOffset = random.nextInt(200) - 100;
             }
-        }
-    }
 
-    @Unique
-    private void renderStaticNoise(GuiGraphics guiGraphics, int x, int y, int width, int height, float alpha) {
-        if (random.nextFloat() < 0.4f) {
-            int count = random.nextInt(15);
-            for (int i = 0; i < count; i++) {
-                int px = x + random.nextInt(width);
-                int py = y + random.nextInt(height);
-                int pw = random.nextInt(30);
-                int ph = 1;
-                int noiseAlpha = (int) (random.nextFloat() * 180 * alpha);
-                guiGraphics.fill(px, py, px + pw, py + ph, (noiseAlpha << 24) | 0xFFFFFF);
-            }
+            int finalWidth = width + wOffset;
+            int finalX = x + xOffset - (wOffset / 2);
+
+            guiGraphics.blit(texture, finalX, currY, 0, i * sliceHeight, finalWidth, sliceHeight, texWidth, texHeight, color);
         }
     }
 }
