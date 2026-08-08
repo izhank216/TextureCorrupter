@@ -6,7 +6,8 @@
 		"BiomeColorMixin",
 		"TextureAtlasSpriteMixin",
 		"MaterialDefinitonMixin",
-		"LogoCorruptionMixin"
+		"LogoCorruptionMixin",
+		"PanoramaCorruptionMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1
