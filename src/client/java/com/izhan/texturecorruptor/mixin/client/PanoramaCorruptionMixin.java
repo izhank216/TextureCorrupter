@@ -12,15 +12,15 @@ public class PanoramaCorruptionMixin {
             method = "render",
             constant = @Constant(floatValue = 85.0F)
     )
-    private float corruptPanoramaMatrix1(float constant) {
+    private float corruptPanoramaFOV(float constant) {
         return 360.0F;
     }
 
     @ModifyConstant(
             method = "render",
-            constant = @Constant(intValue = 36)
+            constant = @Constant(floatValue = 10.0F)
     )
-    private int corruptPanoramaMatrix2(int constant) {
-        return constant * 3;
+    private float corruptPanoramaDistance(float constant) {
+        return -50.0F;
     }
 }
