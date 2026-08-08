@@ -1,7 +1,7 @@
 {
 	"schemaVersion": 1,
 	"id": "texturecorruptor",
-	"version": "1.0",
+	"version": "2.1",
 	"name": "TextureCorruptor",
 	"description": "Corrupts Minecraft textures.",
 	"authors": [
