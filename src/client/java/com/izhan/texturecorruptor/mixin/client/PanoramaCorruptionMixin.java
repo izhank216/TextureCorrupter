@@ -1,27 +1,26 @@
 // this was edited from logo corruption mixin
 package com.izhan.texturecorruptor.mixin.client;
 
-import net.minecraft.client.renderer.PanoramaRenderer;
+import net.minecraft.client.renderer.CubeMap;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Constant;
 import org.spongepowered.asm.mixin.injection.ModifyConstant;
 
-@Mixin(PanoramaRenderer.class)
+@Mixin(CubeMap.class)
 public class PanoramaCorruptionMixin {
     @ModifyConstant(
-            method = "render(Lnet/minecraft/client/gui/GuiGraphics;IIZ)V",
-            constant = @Constant(intValue = 16)
+            method = "render",
+            constant = @Constant(floatValue = 85.0F)
     )
-    private int corruptPanorama1(int constant) {
-        return constant * 3;
+    private float corruptPanoramaMatrix1(float constant) {
+        return 360.0F;
     }
 
     @ModifyConstant(
-            method = "render(Lnet/minecraft/client/gui/GuiGraphics;IIZ)V",
-            constant = @Constant(intValue = 128)
+            method = "render",
+            constant = @Constant(intValue = 36)
     )
-    private int corruptPanorama2(int constant2) {
-        return 20;
+    private int corruptPanoramaMatrix2(int constant) {
+        return constant * 3;
     }
 }
