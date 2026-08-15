@@ -1,18 +1,29 @@
-// this was edited from logo corruption mixin
 package com.izhan.texturecorruptor.mixin.client;
 
-import net.minecraft.client.renderer.PanoramaRenderer;
+import com.mojang.blaze3d.systems.RenderSystem;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.CubeMap;
+import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.resources.ResourceLocation;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.Constant;
-import org.spongepowered.asm.mixin.injection.ModifyConstant;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Mixin(PanoramaRenderer.class)
-public class PanoramaCorruptionMixin {
-    @ModifyConstant(
-            method = "render",
-            constant = @Constant(floatValue = 0.1F)
+@Mixin(CubeMap.class)
+public class CubeMapCorruptionMixin {
+
+    @Inject(
+        method = "render",
+        at = @At("HEAD")
     )
-    private float corruptPanoramaSpin(float constant) {
-        return 50.0F;
+    private void applyPanoramaCorruption(Minecraft mc, float pitch, float yaw, float alpha, CallbackInfo ci) {
+        RenderSystem.setShader(GameRenderer::getPositionTexColorShader);
+        RenderSystem.setShaderColor(
+            (float) Math.random(),
+            (float) Math.random(),
+            (float) Math.random(),
+            alpha
+        );
     }
 }
